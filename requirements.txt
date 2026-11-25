@@ -1,0 +1,9 @@
+# waterwhen has no runtime dependencies.
+# The app uses the Python standard library only.
+#
+# Development tools (optional):
+#   playwright  — real screenshots for docs/screenshots
+#
+# Install the dev tool with:
+#   python -m pip install playwright
+#   python -m playwright install chromium

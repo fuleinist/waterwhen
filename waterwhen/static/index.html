@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>waterwhen — one bed. One dose. Today.</title>
+<meta name="description" content="An irrigation scheduler for veggie beds. Open ET0, rain and soil moisture become one water dose in millimetres and litres." />
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 2 L18 10 A6 6 0 1 1 6 10 Z" fill="currentColor" />
+      <rect x="9" y="11" width="2" height="2" fill="#f5f0e6" />
+      <rect x="13" y="14" width="2" height="2" fill="#f5f0e6" />
+    </svg>
+    <span>waterwhen</span>
+  </div>
+  <p class="tagline">One bed. One dose. Today.</p>
+</header>
+
+<main class="layout">
+  <aside class="rail">
+    <div class="rail-head">
+      <h2>Beds</h2>
+      <button class="icon-btn" id="add-bed" type="button" title="Add a bed" aria-label="Add a bed">+</button>
+    </div>
+    <ul id="bed-list" class="bed-list"></ul>
+    <div class="rail-foot">
+      <p>ET0, rain and soil moisture from Open-Meteo. A FAO-56 balance per bed.</p>
+    </div>
+  </aside>
+
+  <section id="stage" class="stage" aria-live="polite"></section>
+</main>
+
+<dialog id="bed-dialog">
+  <form id="bed-form">
+    <header class="dialog-head">
+      <h2 id="dialog-title">Add a bed</h2>
+      <button type="button" class="icon-btn" data-close aria-label="Close">×</button>
+    </header>
+
+    <div class="form-grid">
+      <label class="field span-2">
+        <span>Bed name</span>
+        <input name="name" type="text" maxlength="60" required placeholder="North bed" />
+      </label>
+
+      <label class="field span-2">
+        <span>Find a place</span>
+        <div class="search-row">
+          <input name="place" type="text" placeholder="Cherrybrook, Sydney" autocomplete="off" />
+          <button type="button" class="btn small" id="search-place">Search</button>
+        </div>
+        <ul class="search-results" id="search-results"></ul>
+      </label>
+
+      <label class="field">
+        <span>Latitude</span>
+        <input name="lat" type="number" step="0.0001" min="-90" max="90" required />
+      </label>
+      <label class="field">
+        <span>Longitude</span>
+        <input name="lon" type="number" step="0.0001" min="-180" max="180" required />
+      </label>
+
+      <label class="field">
+        <span>Length (m)</span>
+        <input name="length_m" type="number" step="0.1" min="0.3" max="50" required />
+      </label>
+      <label class="field">
+        <span>Width (m)</span>
+        <input name="width_m" type="number" step="0.1" min="0.3" max="50" required />
+      </label>
+      <label class="field">
+        <span>Soil depth (m)</span>
+        <input name="depth_m" type="number" step="0.05" min="0.1" max="1" required />
+      </label>
+      <label class="field">
+        <span>Watering method</span>
+        <select name="method" required></select>
+      </label>
+
+      <label class="field">
+        <span>Soil texture</span>
+        <select name="soil" required></select>
+      </label>
+      <label class="field">
+        <span>Mulch</span>
+        <select name="mulch" required></select>
+      </label>
+      <label class="field">
+        <span>Crop</span>
+        <select name="crop" required></select>
+      </label>
+      <label class="field">
+        <span>Growth stage</span>
+        <select name="stage" required></select>
+      </label>
+
+      <label class="field">
+        <span>Can size (L)</span>
+        <input name="can_litres" type="number" step="0.5" min="2" max="30" required />
+      </label>
+      <label class="field">
+        <span>Drip flow (L/min)</span>
+        <input name="flow_lpm" type="number" step="0.1" min="0.1" max="20" required />
+      </label>
+      <label class="field span-2">
+        <span>Kc override (optional)</span>
+        <input name="kc_override" type="number" step="0.01" min="0.15" max="1.6" placeholder="Use the crop table" />
+      </label>
+    </div>
+
+    <p class="form-error" id="form-error" role="alert"></p>
+
+    <footer class="dialog-foot">
+      <button type="button" class="btn danger" id="delete-bed" hidden>Delete bed</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn ghost" data-close>Cancel</button>
+      <button type="submit" class="btn primary" id="save-bed">Save bed</button>
+    </footer>
+  </form>
+</dialog>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+data/
+.tmp/
+docs/screenshots/.cache/
+.env
